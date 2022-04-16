@@ -9,7 +9,7 @@ Brown, G. D., Lewandowsky, S., & Huang, Z. (2022). Social sampling and expressed
 """
 module SocialSamplingTheory
     using Distributions, Agents, Optim
-    export get_utility, maximize_utility, initialize
+    export get_utility, maximize_utility, maximize_utility!, initialize
     export update_attitudes!, judge_neighborhood!
     export SocialAgent 
     

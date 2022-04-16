@@ -21,9 +21,9 @@ Brown, G. D., Lewandowsky, S., & Huang, Z. (2022). Social sampling and expressed
 Authenticity preference and social extremeness aversion lead to social norm effects and polarization.
 Psychological review, 129(1), 18.
 """
-mutable struct SocialAgent{T} <: AbstractAgent
+mutable struct SocialAgent <: AbstractAgent
     id::Int
-    pos::T
+    pos::NTuple{2,Int}
     α::Float64
     β::Float64
     αn::Float64
@@ -31,6 +31,7 @@ mutable struct SocialAgent{T} <: AbstractAgent
     w::Float64
     γ::Float64
     public_attitude::Float64
+    utility::Float64
 end
 
 """
@@ -60,5 +61,5 @@ Authenticity preference and social extremeness aversion lead to social norm effe
 Psychological review, 129(1), 18.
 """
 function SocialAgent(id, pos; α, β, αn=1.0, βn=1.0, w, γ, public_attitude=0.0) 
-    return SocialAgent(id, pos, α, β, αn, βn, w, γ, public_attitude)
+    return SocialAgent(id, pos, α, β, αn, βn, w, γ, public_attitude, 0.0)
 end

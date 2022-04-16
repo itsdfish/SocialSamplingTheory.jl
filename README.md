@@ -13,7 +13,7 @@ for developing models for SST.
 SocialSamplingTheory.jl provides the following functions:
 
 - `get_utility`
-- `maximize_utility`
+- `maximize_utility!`
 - `maximize_utility`
 - `distance`
 - `update_attitudes!`

@@ -38,8 +38,10 @@ end
 
 function maximize_utility!(agent)
     (;α, β, αn, βn, w , γ) = agent
-    agent.public_attitude = maximize(α, β, αn, βn, w , γ)
-    return nothing 
+    max_a,max_u = maximize_utility(α, β, αn, βn, w , γ)
+    agent.public_attitude = max_a
+    agent.utility = max_u
+    return max_a,max_u
 end 
 
 """
@@ -58,36 +60,28 @@ Returns the expressed attitude that maximizes utility.
 """
 function maximize_utility(α, β, αn, βn, w, γ)
     x0s = [.1,.5,.9]
-    min_y = Inf
-    min_x = Inf 
+    min_u = Inf
+    max_a = Inf 
     for x0 in x0s
         results = optimize(x -> -get_utility(α, β, αn, βn, w , γ, x[1]), [x0],  NelderMead())
         temp_x = Optim.minimizer(results)[1]
         temp_min  = Optim.minimum(results)
-        if temp_min < min_y 
-            min_y = temp_min
-            min_x = temp_x 
+        if temp_min < min_u 
+            min_u = temp_min
+            max_a = temp_x 
         end
     end
-    return min_x
+    return (;max_a,max_u=-min_u)
 end
 
-function initialize(;n_agents, γ = 20, w = .50)
-    space = GridSpace((n_agents, n_agents); periodic = true)
-    model = ABM(
-        SocialAgent, space;
-        scheduler = Schedulers.randomly
-    )
-    id = 1
-    for _ in 1:n_agents, _ in 1:n_agents
-        α, β = rand_parms()
-        public_attitude = mean(Beta(α, β))
-        agent = SocialAgent(id, (1,1); α, β, γ = 20, w = .50, public_attitude)
-        add_agent_single!(agent, model)
-        id += 1
-    end
-    map(_ -> update_attitudes!(model), 1:2)
-    return model
+function maximize_utility(agent)
+    (;α, β, αn, βn, w, γ) = agent 
+    return maximize_utility(α, β, αn, βn, w, γ)
+end
+
+function update_attitudes!(model)
+    update_attitudes!(model, allagents(model))
+    return nothing
 end
 
 """
@@ -97,9 +91,9 @@ end
 
 - `model` agent based model 
 """
-function update_attitudes!(model)
+function update_attitudes!(model, agents)
     v = 0.0
-    for agent in allagents(model)
+    for agent in agents
         judge_neighborhood!(agent, model)
         a1 = agent.public_attitude
         maximize_utility!(agent)
@@ -135,12 +129,4 @@ function judge_neighborhood!(agent, model)
     agent.αn = α
     agent.βn = β
     return nothing 
-end
-
-function rand_parms()
-    μ = rand(Beta(10, 10))
-    n = rand(Gamma(2, 20))
-    α = μ * n 
-    β = (1 - μ) * n
-    return α, β
 end

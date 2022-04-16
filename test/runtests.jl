@@ -8,6 +8,6 @@ using SafeTestsets
     βn = 2.2
     γ = 20.0
     w = .5
-    max_util = maximize_utility(α, β, αn, βn, w, γ)
-    @test max_util ≈ .484 atol = 5e-2
+    max_a,_ = maximize_utility(α, β, αn, βn, w, γ)
+    @test max_a ≈ .484 atol = 5e-2
 end
