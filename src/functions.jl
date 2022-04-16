@@ -3,7 +3,7 @@
 
 Returns the utility given a distribution of private and social attitudes. 
 
-# Arguements 
+# Arguments 
 
 - `α`: parameter of beta distribution coded as conservative
 - `β`: parameter of beta distribution coded as liberal 
@@ -26,7 +26,7 @@ end
 
 Returns percentile difference from the 50 percentile (at median)
 
-# Arguements 
+# Arguments 
 
 - `α`: parameter of beta distribution coded as conservative
 - `β`: parameter of beta distribution coded as liberal 
@@ -47,7 +47,7 @@ end
 
 Returns the expressed attitude that maximizes utility. 
 
-# Arguements 
+# Arguments 
 
 - `α`: parameter of beta distribution coded as conservative
 - `β`: parameter of beta distribution coded as liberal 
