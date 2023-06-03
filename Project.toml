@@ -17,7 +17,7 @@ ConcreteStructs = "0.2.0"
 Distributions = "0.25.0"
 Optim = "1.6.2"
 Revise = "3.0.0"
-SafeTestsets = "0.0.1"
+SafeTestsets = "0.0.1, 0.1"
 julia = "1"
 
 [extras]
