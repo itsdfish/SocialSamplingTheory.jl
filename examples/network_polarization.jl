@@ -8,9 +8,10 @@ using Revise, Agents, SocialSamplingTheory, Distributions
 
 function rand_parms()
     μ = rand(Beta(10, 10))
-    n = rand(Gamma(2, 20))
-    α = μ * n 
-    β = (1 - μ) * n
+    n = Int(round(μ * 100))
+    g = gcd(n, 100)
+    α = n / g 
+    β = (100 / g) - α
     return α, β
 end
 
@@ -39,15 +40,31 @@ function switch_positions!(a1, a2)
     return nothing
 end
 
+function can_switch(a1, a2, u1, u2)
+    return u1.max_u > a1.utility && u2.max_u > a2.utility 
+end
+
 function agent_step!(agent1, model)
-    searching = true 
-    while searching 
+    searching = true
+    cnt = 0 
+    while searching && (cnt < 10000)
         agent2 = random_agent(model)
         switch_positions!(agent1, agent2)
+        u1 = maximize_utility(agent1)
+        u2 = maximize_utility(agent2)
+        if can_switch(agent1, agent2, u1, u2)
+            searching = false 
+        else
+            switch_positions!(agent1, agent2)
+        end
+        cnt += 1
     end
     # select random agent
     # determine whether moving increases utility 
-    update_attitudes!(model)
+    neighbors1 = nearby_agents(agent1, model)
+    update_attitudes!(model, neighbors1)
+    neighbors2 = nearby_agents(agent2, model)
+    update_attitudes!(model, neighbors2)
 end
 
 model = initialize(;n_agents=100, γ = 20, w = .50)
