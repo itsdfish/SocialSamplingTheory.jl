@@ -78,7 +78,7 @@ function sim_backfire(α, β, αn, βn, w, γ)
     for (i,k) in enumerate(K)
         α′ = k * αn
         β′ = (α′ - 1 / 3) / target_median + 2/3 - α′
-        attitude = maximize(α, β, α′, β′ , w, γ)
+        attitude = maximize_utility(α, β, α′, β′ , w, γ)
         σ² = var(Beta(α′, β′))
         precisions[i] = 1 / σ²
         attitudes[i] = attitude
