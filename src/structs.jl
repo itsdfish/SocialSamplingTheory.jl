@@ -1,5 +1,7 @@
+abstract type AbstractSocialAgent <: AbstractAgent end
+
 """
-    SocialAgent
+    SocialAgent <: AbstractSocialAgent
 
 A social agent for Social Sampling Theory which can be used with Agents.jl 
 
@@ -21,7 +23,7 @@ Brown, G. D., Lewandowsky, S., & Huang, Z. (2022). Social sampling and expressed
 Authenticity preference and social extremeness aversion lead to social norm effects and polarization.
 Psychological review, 129(1), 18.
 """
-mutable struct SocialAgent <: AbstractAgent
+mutable struct SocialAgent <: AbstractSocialAgent
     id::Int
     pos::NTuple{2,Int}
     α::Float64

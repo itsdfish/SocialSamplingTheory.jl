@@ -36,7 +36,7 @@ function distance(α, β, x)
     return abs(0.50 - cdf(Beta(α, β), x))
 end
 
-function maximize_utility!(agent)
+function maximize_utility!(agent::AbstractSocialAgent)
     (;α, β, αn, βn, w , γ) = agent
     max_a,max_u = maximize_utility(α, β, αn, βn, w , γ)
     agent.public_attitude = max_a
@@ -74,7 +74,7 @@ function maximize_utility(α, β, αn, βn, w, γ)
     return (;max_a,max_u=-min_u)
 end
 
-function maximize_utility(agent)
+function maximize_utility(agent::AbstractSocialAgent)
     (;α, β, αn, βn, w, γ) = agent 
     return maximize_utility(α, β, αn, βn, w, γ)
 end
@@ -85,7 +85,7 @@ function update_attitudes!(model)
 end
 
 """
-    update_attitudes!(model)
+    update_attitudes!(model, agents)
 
 # Arguments
 
@@ -100,7 +100,6 @@ function update_attitudes!(model, agents)
         a2 = agent.public_attitude
         v += abs(a1 - a2)
     end
-    println(v)
     return nothing 
 end
 

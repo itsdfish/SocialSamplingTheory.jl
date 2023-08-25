@@ -1,7 +1,9 @@
 using SafeTestsets
 
 @safetestset "maximum utility" begin
-    using Test, Distributions, SocialSamplingTheory
+    using Test
+    using Distributions
+    using SocialSamplingTheory
     α = 4
     β = 9
     αn = 6
