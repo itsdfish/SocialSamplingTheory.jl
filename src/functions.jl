@@ -16,8 +16,8 @@ Returns the utility given a distribution of private and social attitudes.
 function get_utility(α, β, αn, βn, w , γ, x)
     self_diff = distance(α, β, x)
     social_diff = distance(αn, βn, x)
-    social_disutil = exp(γ * (social_diff - .50)) 
-    self_disutil = exp(γ * (self_diff - .50))
+    social_disutil = exp(γ * social_diff) 
+    self_disutil = exp(γ * self_diff)
     return 1.0 - w * social_disutil - (1 - w) * self_disutil
 end
 
