@@ -16,9 +16,9 @@ Returns the utility given a distribution of private and social attitudes.
 function get_utility(α, β, αn, βn, w , γ, x)
     self_diff = distance(α, β, x)
     social_diff = distance(αn, βn, x)
-    social_disutil = exp(γ * social_diff) 
     self_disutil = exp(γ * self_diff)
-    return 1.0 - w * social_disutil - (1 - w) * self_disutil
+    social_disutil = exp(γ * social_diff)
+    return w * social_disutil + (1 - w) * self_disutil
 end
 
 """
@@ -30,7 +30,7 @@ Returns percentile difference from the 50 percentile (at median)
 
 - `α`: parameter of beta distribution coded as conservative
 - `β`: parameter of beta distribution coded as liberal 
-- `x`: expressed attitude in terms of a percentile
+- `x`: expressed attitude
 """
 function distance(α, β, x)
     return abs(0.50 - cdf(Beta(α, β), x))
@@ -63,7 +63,7 @@ function maximize_utility(α, β, αn, βn, w, γ)
     min_u = Inf
     max_a = Inf 
     for x0 in x0s
-        results = optimize(x -> -get_utility(α, β, αn, βn, w , γ, x[1]), [x0],  NelderMead())
+        results = optimize(x -> get_utility(α, β, αn, βn, w , γ, x[1]), [x0],  NelderMead())
         temp_x = Optim.minimizer(results)[1]
         temp_min  = Optim.minimum(results)
         if temp_min < min_u 
