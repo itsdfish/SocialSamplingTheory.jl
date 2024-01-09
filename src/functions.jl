@@ -11,7 +11,7 @@ Returns the utility given a distribution of private and social attitudes.
 - `βn`: parameter of beta distribution coded as liberal for social network 
 - `w`: weight for social extremeness aversion
 - `γ`: decision sensitivity parameter 
-- `x`: expressed attitude in terms of a percentile
+- `x`: publicly expressed attitude
 """
 function get_utility(α, β, αn, βn, w , γ, x)
     self_diff = distance(α, β, x)
@@ -47,7 +47,7 @@ end
 """
     maximize_utility(α, β, αn, βn, w, γ)
 
-Returns the expressed attitude that maximizes utility. 
+Returns the expressed attitude that maximizes utility and the associated utility value. 
 
 # Arguments 
 
