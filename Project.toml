@@ -11,7 +11,7 @@ Optim = "429524aa-4258-5aef-a3af-852621145aeb"
 SafeTestsets = "1bc83da4-3b8d-516f-aca4-4fe02f6d838f"
 
 [compat]
-Agents = "5.0.0"
+Agents = "5.0.0,6.0"
 ConcreteStructs = "0.2.0"
 Distributions = "0.25.0"
 Optim = "1.6.2"
