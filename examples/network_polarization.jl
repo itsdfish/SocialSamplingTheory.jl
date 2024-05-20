@@ -4,7 +4,14 @@
 cd(@__DIR__)
 using Pkg
 Pkg.activate("../")
-using Revise, Agents, SocialSamplingTheory, Distributions
+using SocialSamplingTheory, Distributions
+import SocialSamplingTheory: maximize_utility
+import SocialSamplingTheory: maximize_utility!
+Pkg.activate("")
+using Revise, Agents
+include("agents.jl")
+
+
 
 function rand_parms()
     μ = rand(Beta(10, 10))
@@ -19,7 +26,7 @@ function initialize(;n_agents, γ = 20, w = .50)
     space = GridSpace((n_agents, n_agents); periodic = true)
     model = ABM(
         SocialAgent, space;
-        scheduler = Schedulers.randomly
+        scheduler = Schedulers.Randomly()
     )
     id = 1
     for _ in 1:n_agents, _ in 1:n_agents
