@@ -25,7 +25,7 @@ Psychological review, 129(1), 18.
 """
 mutable struct SocialAgent <: AbstractSocialAgent
     id::Int
-    pos::NTuple{2,Int}
+    pos::NTuple{2, Int}
     α::Float64
     β::Float64
     αn::Float64
@@ -62,20 +62,20 @@ Brown, G. D., Lewandowsky, S., & Huang, Z. (2022). Social sampling and expressed
 Authenticity preference and social extremeness aversion lead to social norm effects and polarization.
 Psychological review, 129(1), 18.
 """
-function SocialAgent(id, pos; α, β, αn=1.0, βn=1.0, w, γ, public_attitude=0.0) 
+function SocialAgent(id, pos; α, β, αn = 1.0, βn = 1.0, w, γ, public_attitude = 0.0)
     return SocialAgent(id, pos, α, β, αn, βn, w, γ, public_attitude, 0.0)
 end
 
 function maximize_utility!(agent::AbstractSocialAgent)
-    (;α, β, αn, βn, w , γ) = agent
-    max_a,max_u = maximize_utility(α, β, αn, βn, w , γ)
+    (; α, β, αn, βn, w, γ) = agent
+    max_a, max_u = maximize_utility(α, β, αn, βn, w, γ)
     agent.public_attitude = max_a
     agent.utility = max_u
-    return max_a,max_u
-end 
+    return max_a, max_u
+end
 
 function maximize_utility(agent::AbstractSocialAgent)
-    (;α, β, αn, βn, w, γ) = agent 
+    (; α, β, αn, βn, w, γ) = agent
     return maximize_utility(α, β, αn, βn, w, γ)
 end
 
@@ -100,7 +100,7 @@ function update_attitudes!(model, agents)
         a2 = agent.public_attitude
         v += abs(a1 - a2)
     end
-    return nothing 
+    return nothing
 end
 
 """
@@ -114,12 +114,12 @@ end
 function judge_neighborhood!(agent, model)
     attitudes = fill(0.0, 8)
     i = 1
-    for neighbor in nearby_agents(agent, model)  
+    for neighbor in nearby_agents(agent, model)
         attitudes[i] = neighbor.public_attitude
         i += 1
     end
     dist = fit(Beta, attitudes)
-    (;α,β) = dist
+    (; α, β) = dist
     n = α + β
     if n > 20
         α = 20 * (α / n)
@@ -127,5 +127,5 @@ function judge_neighborhood!(agent, model)
     end
     agent.αn = α
     agent.βn = β
-    return nothing 
+    return nothing
 end

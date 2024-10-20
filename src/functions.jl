@@ -13,7 +13,7 @@ Returns the utility given a distribution of private and social attitudes.
 - `γ`: decision sensitivity parameter 
 - `x`: publicly expressed attitude
 """
-function get_utility(α, β, αn, βn, w , γ, x)
+function get_utility(α, β, αn, βn, w, γ, x)
     self_diff = distance(α, β, x)
     social_diff = distance(αn, βn, x)
     self_disutil = exp(γ * self_diff)
@@ -51,17 +51,17 @@ Returns the expressed attitude that maximizes utility and the associated utility
 - `γ`: decision sensitivity parameter 
 """
 function maximize_utility(α, β, αn, βn, w, γ)
-    x0s = [.1,.5,.9]
+    x0s = [0.1, 0.5, 0.9]
     min_u = Inf
-    max_a = Inf 
+    max_a = Inf
     for x0 in x0s
-        results = optimize(x -> get_utility(α, β, αn, βn, w , γ, x[1]), [x0],  NelderMead())
+        results = optimize(x -> get_utility(α, β, αn, βn, w, γ, x[1]), [x0], NelderMead())
         temp_x = Optim.minimizer(results)[1]
-        temp_min  = Optim.minimum(results)
-        if temp_min < min_u 
+        temp_min = Optim.minimum(results)
+        if temp_min < min_u
             min_u = temp_min
-            max_a = temp_x 
+            max_a = temp_x
         end
     end
-    return (;max_a,max_u=-min_u)
+    return (; max_a, max_u = -min_u)
 end

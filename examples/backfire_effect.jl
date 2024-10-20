@@ -19,18 +19,18 @@ using Revise, SocialSamplingTheory, Distributions, Plots
 # utility sensitivity parameter 
 γ = 20.0
 #  weights for social extremeness aversion
-ws = .1:.05:.9
+ws = 0.1:0.05:0.9
 
 function sim_backfire(α, β, αn, βn, w, γ)
-    K = .40:.025:6
+    K = 0.40:0.025:6
     n = length(K)
     attitudes = fill(0.0, n)
     precisions = fill(0.0, n)
     target_median = median(Beta(αn, βn))
-    for (i,k) in enumerate(K)
+    for (i, k) in enumerate(K)
         α′ = k * αn
-        β′ = (α′ - 1 / 3) / target_median + 2/3 - α′
-        attitude,_ = maximize_utility(α, β, α′, β′ , w, γ)
+        β′ = (α′ - 1 / 3) / target_median + 2 / 3 - α′
+        attitude, _ = maximize_utility(α, β, α′, β′, w, γ)
         σ² = var(Beta(α′, β′))
         precisions[i] = 1 / σ²
         attitudes[i] = attitude
@@ -46,7 +46,7 @@ pyplot()
 plot(
     precision,
     attitude,
-    ylims = (.25,.76),
+    ylims = (0.25, 0.76),
     xtickfontsize = 10,
     ytickfontsize = 10,
     xguidefontsize = 12,
@@ -59,9 +59,9 @@ plot(
     Expressed Attitude",
     grid = false,
     label = "",
-    lc = cgrad(:acton, [ws;]'; rev=true),
+    lc = cgrad(:acton, [ws;]'; rev = true),
     line_z = (ws)',
-    size = (600,300),
+    size = (600, 300),
     dpi = 800
 )
 savefig("backfire.png")

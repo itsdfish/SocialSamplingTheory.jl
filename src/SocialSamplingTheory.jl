@@ -8,13 +8,12 @@ Brown, G. D., Lewandowsky, S., & Huang, Z. (2022). Social sampling and expressed
  Psychological Review, 129(1), 18.
 """
 module SocialSamplingTheory
-    using Distributions
-    using Optim
+using Distributions
+using Optim
 
-    export get_utility
-    export maximize_utility
-    export maximize_utility!
+export get_utility
+export maximize_utility
+export maximize_utility!
 
-    
-    include("functions.jl")
+include("functions.jl")
 end
