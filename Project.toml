@@ -1,7 +1,7 @@
 name = "SocialSamplingTheory"
 uuid = "df2e8839-b2b1-4723-be1d-fec23799ee0a"
 authors = ["itsdfish"]
-version = "0.2.1"
+version = "0.2.2"
 
 [deps]
 ConcreteStructs = "2569d6c7-a4a2-43d3-a901-331e8e4be471"
